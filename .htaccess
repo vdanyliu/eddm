@@ -1,0 +1,13 @@
+AddDefaultCharset utf-8
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !favicon.ico
+RewriteCond %{REQUSET_FILENAME} !-f
+RewriteCond %{REQUSET_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !\.(css|js|png|jpg|jpeg)
+#RewriteCond %{REQUEST_FILENAME} !favicon.ico
+RewriteRule ^(.*)$ index.php
+#RewriteEngine on
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ index.php
