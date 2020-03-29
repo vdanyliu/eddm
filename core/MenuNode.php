@@ -6,9 +6,9 @@ namespace core;
 
 class MenuNode
 {
-	public $path;
-	public $title;
-	public $menuItems;
+	private $path;
+	private $title;
+	private $menuItems;
 
 	/**
 	 * MenuNode constructor.
@@ -19,6 +19,11 @@ class MenuNode
 		$this->menuItems = array();
 		$this->path = "root";
 		$this->title = $title;
+	}
+
+	function __clone()
+	{
+		$this->menuItems = array();
 	}
 
 	function deleteNode($path) {
@@ -35,14 +40,11 @@ class MenuNode
 		if (!$node = $this->getNodeByPath($path)) {
 			return;
 		}
-		$newNode = new self($title);
+		$newNode = clone $node;
 		array_push($node->menuItems, $newNode);
 		$last_key = array_key_last($node->menuItems);
-		$newNode->modifyPath($node->path, $last_key);
-	}
-
-	private function modifyPath($parentPath, $key) {
-		$this->path = $parentPath . '/' . $key;
+		$newNode->path = $newNode->path . '/' . $last_key;
+		$newNode->title = $title;
 	}
 
 	private function getNodeByPath($path, $deepLevel = 0) {
@@ -59,5 +61,17 @@ class MenuNode
 			$node = $nextNode->getNodeByPath($path, $deepLevel);
 			return $node;
 		}
+	}
+
+	public function getTitle() {
+		return $this->title;
+	}
+
+	public function getPath() {
+		return $this->path;
+	}
+
+	public function getMenuNodeArr() {
+		return $this->menuItems;
 	}
 }
