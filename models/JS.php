@@ -37,15 +37,25 @@ class JS extends Model
 
 	private function generateMenuItemsFromObject(MenuNode $menuNode) {
 		ob_start();
-		$objArr = $menuNode->getMenuNodeArr();
-		foreach ($objArr as $node) {
-
+		$path = $menuNode->getPath();
+		echo "<ul id = $path>";
+		echo "<li id = '$path'>+New item</li>";
+		$objsArr = $menuNode->getMenuNodeArr();
+		foreach ($objsArr as $node) {
+			$path = $node->getPath();
+			$title = $node->getTitle();
+			echo "<li id = $path>$title</li>";
+			echo "<div id = $path></div>";
 		}
+		echo "</ul>";
+		return ob_get_clean();
 	}
 
 	public function getMenuHead() {
 		$key = $_POST['key'];
 		$menuHead = $this->getMenuHeadObjectByKey($key);
 		$result = $this->generateMenuItemsFromObject($menuHead);
+		$json['head'] = $result;
+		echo json_encode($json);
 	}
 }

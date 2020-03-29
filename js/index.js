@@ -6,7 +6,6 @@ function indexController() {
 
 	selectedItem.addEventListener('change', function() {
 		let selectedValue = selectedItem.options[selectedItem.selectedIndex];
-		console.log(selectedValue);
 		menuBody = getMenuBody(selectedValue);
 	})
 }
@@ -19,7 +18,7 @@ function getMenuBody(selectedValue) {
 	}
 	let data = new FormData();
 	data.append('getMenuHead', '1');
-	data.append('value', selectedValue.value);
+	data.append('key', selectedValue.value);
 	data.append('title', selectedValue.text);
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', 'JS/request', true);
